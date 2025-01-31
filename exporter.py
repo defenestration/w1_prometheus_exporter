@@ -6,7 +6,7 @@ import subprocess
 import argparse
 
 TEMP_REGEX = re.compile('t=-?([0-9]+)')
-INTERNAL_TEMP_REGEX = re.compile('temp=([0-9]+\.[0-9])')
+INTERNAL_TEMP_REGEX = re.compile('temp=([0-9]+\\.[0-9])')
 SENSOR_PATH = "/sys/bus/w1/devices"
 CRC_ERROR="Could not read sensor. Wrong CRC."
 DEFAULT_VALUE_ERROR="Could not read sensor. Sensor returned default value."
@@ -95,16 +95,16 @@ class Sensor (object):
                     else:
                         self.unset_missread()
                         return ret_val, ""
-                except Exception, e:
-                    print self.id, "Ups something went wrong.", e.message
+                except (Exception, e):
+                    print( self.id, "Ups something went wrong.", e.message)
                     if crc is not None:
-                        print "CRC Line: ", crc
+                        print( "CRC Line: ", crc)
                     if l is not None:
-                        print "l Line: ", l
+                        print( "l Line: ", l)
                     self.set_missread()
                     return None, e.message
-        except IOError, e:
-            print e.message
+        except (IOError, e):
+            print( e.message)
             self.set_missread()
             return None, e.message
 
@@ -119,7 +119,7 @@ def register_prometheus_gauges(export_internal_raspberry=False):
     g = Gauge("sensor_temperature_in_celsius", "Local room temperature around the raspberry pi", ["sensor"])
     error_g = Gauge("faulty_sensor_read", "Is 1 if the sensor could not be read.", ["sensor"])
     sensors = find_sensors()
-    print "Found sensors:", ", ".join(map(lambda x: str(x), sensors))
+    print( "Found sensors:", ", ".join(map(lambda x: str(x), sensors)))
     for sensor in sensors:
         g.labels(str(sensor)).set_function(sensor)
         sensor.set_error_gauge(error_g.labels(str(sensor)))

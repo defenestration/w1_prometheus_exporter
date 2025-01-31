@@ -9,6 +9,15 @@ One remark: Since the DS18S20 needs 750ms to measure the temperature and convert
 should set your Prometheus scrape_interval to at least *n* * 750ms. *n* is the number of DS18S20 sensors on your 1-wire
  bus.
 
+
+# Usage
+
+```
+python exporter.py
+```
+
+Use the `--internal` flag to montior the internal temp of the Rpi CPU instead. That requires /usr/bin/vcgencmd to be installed.
+
 # Installation
 
 First checkout this git repository:
