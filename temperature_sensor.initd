@@ -1,0 +1,6 @@
+#!/sbin/openrc-run
+command="/usr/bin/env python /opt/prometheus_temperature/exporter.py"
+pidfile="/run/${RC_SVCNAME}.pid"
+command_args="-p ${pidfile}"
+command_background=True
+

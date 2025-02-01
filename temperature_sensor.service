@@ -3,7 +3,7 @@ Description=Simple HTTP Service to measure temperature via local w1-Sensor
 Before=prometheus.service
 
 [Service]
-ExecStart=/usr/bin/python /opt/prometheus_temperature/exporter.py --internal
+ExecStart=/usr/bin/python /opt/prometheus_temperature/exporter.py 
 
 [Install]
 WantedBy=multi-user.target
